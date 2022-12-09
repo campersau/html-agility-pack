@@ -31,10 +31,7 @@ namespace HtmlAgilityPack
             {
                 if (value)
                 {
-                    if (HtmlNode.ElementsFlags.ContainsKey("p"))
-                    {
-                        HtmlNode.ElementsFlags.Remove("p");
-                    }
+                    HtmlNode.ElementsFlags.Remove("p");
                 }
                 else
                 {
@@ -673,7 +670,8 @@ namespace HtmlAgilityPack
                 throw new Exception(HtmlExceptionUseIdAttributeFalse);
             }
 
-            return Nodesid.ContainsKey(id) ? Nodesid[id] : null;
+            HtmlNode node;
+            return Nodesid.TryGetValue(id, out node) ? node : null;
         }
 
         /// <summary>
@@ -1723,8 +1721,9 @@ namespace HtmlAgilityPack
                         // check buffer end
                         if ((_currentnode._namelength + 3) <= (Text.Length - (_index - 1)))
                         {
-                            if (string.Compare(Text.Substring(_index - 1, _currentnode._namelength + 2),
-                                    "</" + _currentnode.Name, StringComparison.OrdinalIgnoreCase) == 0)
+                            if (Text[_index - 1] == '<' &&
+                                Text[_index] == '/' &&
+                                string.Compare(Text, _index + 1, _currentnode.Name, 0, _currentnode._namelength, StringComparison.OrdinalIgnoreCase) == 0)
                             {
                                 int c = Text[_index - 1 + 2 + _currentnode.Name.Length];
                                 if ((c == '>') || (IsWhiteSpace(c)))
@@ -1743,7 +1742,7 @@ namespace HtmlAgilityPack
 									// https://www.w3schools.com/jsref/prop_node_innertext.asp
 									// textContent returns the text content of all elements, while innerText returns the content of all elements, except for <script> and <style> elements.
 									// innerText will not return the text of elements that are hidden with CSS (textContent will). ==> The parser do not support that.
-									if (_currentnode.Name.ToLowerInvariant().Equals("script")  || _currentnode.Name.ToLowerInvariant().Equals("style"))
+									if (_currentnode.Name.Equals("script", StringComparison.OrdinalIgnoreCase)  || _currentnode.Name.Equals("style", StringComparison.OrdinalIgnoreCase))
                                     {
 	                                    _currentnode._isHideInnerText = true;
 									}

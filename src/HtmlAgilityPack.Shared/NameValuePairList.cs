@@ -50,7 +50,8 @@ namespace HtmlAgilityPack
         {
             if (name == null)
                 return _allPairs;
-            return _pairsWithName.ContainsKey(name) ? _pairsWithName[name] : new List<KeyValuePair<string, string>>();
+            List<KeyValuePair<string, string>> al;
+            return _pairsWithName.TryGetValue(name, out al) ? al : new List<KeyValuePair<string, string>>();
         }
 
         internal string GetNameValuePairValue(string name)

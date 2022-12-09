@@ -385,9 +385,9 @@ namespace HtmlAgilityPack
 	 
 				if (name != null)
 				{
-					name = name.ToLowerInvariant();
-
-					bool isDisplayScriptingText = (name == "head" || name == "script" || name == "style"); 
+					bool isDisplayScriptingText = name.Equals("head", StringComparison.OrdinalIgnoreCase) ||
+						name.Equals("script", StringComparison.OrdinalIgnoreCase) ||
+						name.Equals("style", StringComparison.OrdinalIgnoreCase); 
 					 
 					InternalInnerText(sb, isDisplayScriptingText, depthLevel);
 				}
@@ -1909,7 +1909,7 @@ namespace HtmlAgilityPack
 					if (_ownerdocument.OptionOutputAsXml)
 					{
 						var commentNode = (HtmlCommentNode) this;
-						if (!_ownerdocument.BackwardCompatibility && commentNode.Comment.ToLowerInvariant().StartsWith("<!doctype"))
+						if (!_ownerdocument.BackwardCompatibility && commentNode.Comment.StartsWith("<!doctype", StringComparison.OrdinalIgnoreCase))
 						{
 							outText.Write(commentNode.Comment);
 						}

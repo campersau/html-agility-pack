@@ -96,7 +96,7 @@ namespace HtmlAgilityPack
                 return;
             if (('/' != Arg[0]) && ('-' != Arg[0])) // not a param
                 return;
-            if (Arg.Substring(1, Name.Length).ToLowerInvariant() == Name.ToLowerInvariant())
+            if (Arg.Substring(1, Name.Length).Equals(Name, StringComparison.OrdinalIgnoreCase))
                 ArgValue = true;
         }
 
@@ -106,7 +106,7 @@ namespace HtmlAgilityPack
                 return;
             if (('/' != Arg[0]) && ('-' != Arg[0])) // not a param
                 return;
-            if (Arg.Substring(1, Name.Length).ToLowerInvariant() == Name.ToLowerInvariant())
+            if (Arg.Substring(1, Name.Length).Equals(Name, StringComparison.OrdinalIgnoreCase))
             {
                 try
                 {
@@ -132,7 +132,7 @@ namespace HtmlAgilityPack
                 return;
             if (('/' != Arg[0]) && ('-' != Arg[0])) // not a param
                 return;
-            if (Arg.Substring(1, Name.Length).ToLowerInvariant() == Name.ToLowerInvariant())
+            if (Arg.Substring(1, Name.Length).Equals(Name, StringComparison.OrdinalIgnoreCase))
                 ArgValue = Arg.Substring(Name.Length + 2, Arg.Length - Name.Length - 2);
         }
 
